@@ -1,11 +1,13 @@
-
+import HeroSection from './Sections/HeroSection';
+import TaskBoard from './Sections/Taskboard';
 
 const Homepage = () => {
-    return (
-        <div>
-
-        </div>
-    );
+  return (
+    <main className="container mx-auto">
+      <HeroSection />
+      <TaskBoard />
+    </main>
+  );
 };
 
 export default Homepage;
