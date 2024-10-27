@@ -1,18 +1,24 @@
 import toast from 'react-hot-toast';
 
-const AddTaskModal = ({ handleAddNewTask, updatedTask }) => {
+const AddTaskModal = ({ handleTasks, updatedTask }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
+    const id = crypto.randomUUID();
     const title = form.title.value;
     const description = form.description.value;
     const tags = form.tags.value.split(',');
     const priority = form.priority.value;
-    const task = { title, description, tags, priority };
+    const task = { id, title, description, tags, priority };
     if (task) {
-      toast.success('Task added successfully');
+      if (updatedTask) {
+        toast.success('Task updated successfully');
+        handleTasks(task,true);
+      } else {
+        toast.success('Task added successfully');
+        handleTasks(task,false);
+      }
     }
-    handleAddNewTask(task);
   };
   return (
     <>
@@ -86,7 +92,7 @@ const AddTaskModal = ({ handleAddNewTask, updatedTask }) => {
             type="submit"
             className="rounded bg-blue-600 px-4 py-2 text-white transition-all hover:opacity-80"
           >
-            {updatedTask ? "Save" : "Create new Task"}
+            {updatedTask ? 'Save' : 'Create new Task'}
           </button>
         </div>
       </form>

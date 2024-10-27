@@ -24,8 +24,15 @@ const TaskBoard = () => {
     document.body.style.overflow = 'hidden';
   };
 
-  const handleAddNewTask = (task) => {
-    setTasks([...tasks, task]);
+  const handleTasks = (task, isUpdate) => {
+    if (isUpdate) {
+      const updatedTasks = tasks.map((item) =>
+        item.id === task.id ? { ...item, ...task } : item
+      );
+      setTasks(updatedTasks);
+    } else {
+      setTasks([...tasks, task]);
+    }
     setShowModal(false);
     document.body.style.overflow = 'auto';
   };
@@ -36,7 +43,9 @@ const TaskBoard = () => {
   };
   return (
     <section className="mb-20" id="tasks">
-      {showModal && <AddTaskModal handleAddNewTask={handleAddNewTask} updatedTask={updatedTask} />}
+      {showModal && (
+        <AddTaskModal handleTasks={handleTasks} updatedTask={updatedTask} />
+      )}
 
       <div className="container">
         <div className="p-2 flex justify-end">
