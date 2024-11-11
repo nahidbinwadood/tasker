@@ -26,10 +26,15 @@ const TaskBoard = () => {
 
   const handleTasks = (task, isUpdate) => {
     if (isUpdate) {
-      const updatedTasks = tasks.map((item) =>
-        item.id === task.id ? { ...item, ...task } : item
-      );
+      const updatedTasks = tasks.map((item) => {
+        if (item.title === task.title) {
+          return task;
+        } else {
+          return item;
+        }
+      });
       setTasks(updatedTasks);
+     // console.log(tasks);
     } else {
       setTasks([...tasks, task]);
     }
@@ -44,7 +49,7 @@ const TaskBoard = () => {
   return (
     <section className="mb-20" id="tasks">
       {showModal && (
-        <AddTaskModal handleTasks={handleTasks} updatedTask={updatedTask} />
+        <AddTaskModal handleTasks={handleTasks} updatedTask={updatedTask} setUpdatedTask={setUpdatedTask} />
       )}
 
       <div className="container">

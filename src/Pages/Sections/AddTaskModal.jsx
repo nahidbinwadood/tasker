@@ -1,6 +1,6 @@
 import toast from 'react-hot-toast';
 
-const AddTaskModal = ({ handleTasks, updatedTask }) => {
+const AddTaskModal = ({ handleTasks, updatedTask, setUpdateTask }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -10,13 +10,16 @@ const AddTaskModal = ({ handleTasks, updatedTask }) => {
     const tags = form.tags.value.split(',');
     const priority = form.priority.value;
     const task = { id, title, description, tags, priority };
+
+    //
     if (task) {
       if (updatedTask) {
+        handleTasks(task, true);
         toast.success('Task updated successfully');
-        handleTasks(task,true);
+        setUpdateTask(null);
       } else {
         toast.success('Task added successfully');
-        handleTasks(task,false);
+        handleTasks(task, false);
       }
     }
   };
@@ -87,12 +90,15 @@ const AddTaskModal = ({ handleTasks, updatedTask }) => {
           </div>
         </div>
 
-        <div className="mt-16 flex justify-center lg:mt-20">
+        <div className="mt-16 flex items-center justify-between lg:mt-20">
           <button
             type="submit"
             className="rounded bg-blue-600 px-4 py-2 text-white transition-all hover:opacity-80"
           >
             {updatedTask ? 'Save' : 'Create new Task'}
+          </button>
+          <button className="rounded bg-red-600 px-4 py-2 text-white transition-all hover:opacity-80">
+            close
           </button>
         </div>
       </form>
